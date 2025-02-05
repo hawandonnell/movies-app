@@ -1,13 +1,15 @@
 import { Container, TextField, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2'
 import { observer } from "mobx-react-lite"
-import { useMemo, useEffect } from "react"
+import { useMemo, useEffect, useContext } from "react"
 import { useNavigate } from "react-router"
 import { debounce } from "lodash"
-import { MoviesStore, MovieShorten, SearchResponse } from "../atomics/store"
+import { MovieShorten, SearchResponse } from "../atomics/store"
 import MovieCard from "../components/MovieCard"
+import { RootStoreContext } from "../hooks/RootStoreContext"
 
-const Search = observer(({ store }: { store: MoviesStore }) => {
+const Search = observer(() => {
+  const { moviesStore: store, featuredStore } = useContext(RootStoreContext)
   const navigate = useNavigate()
   const debouncedSearch = useMemo(() => {
       return debounce(() => {
@@ -20,10 +22,20 @@ const Search = observer(({ store }: { store: MoviesStore }) => {
     navigate('/movie')
   }
 
+  const toggleFeatured = (movie: MovieShorten) => {
+    const movieIndex = featuredStore.movies.findIndex((m) => m.imdbID === movie.imdbID)
+    if (movieIndex !== -1) {
+      featuredStore.movies.splice(movieIndex, 1)
+    } else {
+      featuredStore.movies.push(movie)
+    }
+  }
+
   useEffect(() => {
+    console.log('useEffect')
     if (store.search) debouncedSearch()
     return () => debouncedSearch.cancel()
-  }, [debouncedSearch, store.search])
+  }, [debouncedSearch, store.search, store.searchResult.Search.length])
 
   return (
     <Container maxWidth="xl">
@@ -35,7 +47,7 @@ const Search = observer(({ store }: { store: MoviesStore }) => {
         <Grid container spacing={2}>
           {store.searchResult.Search.map(movie => (
             <Grid key={movie.imdbID}>
-              <MovieCard movie={movie} onMovieSelect={onMovieSelect} />
+              <MovieCard movie={movie} onMovieSelect={onMovieSelect} toggleFeatured={toggleFeatured} />
             </Grid>
           ))}
         </Grid>

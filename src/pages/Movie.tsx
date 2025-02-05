@@ -1,8 +1,10 @@
+import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Container } from '@mui/material';
-import { CurrentMovieStore } from "../atomics/store";
+import { RootStoreContext } from '../hooks/RootStoreContext';
 
-const Movie = observer(({ store }: { store: CurrentMovieStore }) => {
+const Movie = observer(() => {
+    const store = useContext(RootStoreContext).moviesStore
     return (
         <Container maxWidth="xl">
             {store.state === 'pending' && <div>Loading...</div>}

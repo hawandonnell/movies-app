@@ -1,11 +1,15 @@
-import { MoviesStore, SearchResponse, MovieShorten, FeaturedMoviesStore } from "./atomics/store"
+import { useContext } from 'react'
+import { SearchResponse, MovieShorten } from "./atomics/store"
 import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router"
 import { Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2' 
 import MovieCard from "./components/MovieCard"
+import { RootStoreContext } from "./hooks/RootStoreContext"
 
-const App = observer(({ store, featuredStore }: { store: MoviesStore, featuredStore: FeaturedMoviesStore }) => {
+const App = observer(() => {
+  const { moviesStore: store, featuredStore } = useContext(RootStoreContext)
+  
   const navigate = useNavigate()
 
   const onMovieSelect = (movie: MovieShorten) => {

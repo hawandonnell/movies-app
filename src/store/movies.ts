@@ -22,7 +22,9 @@ class Movies implements MoviesStore {
 
     constructor() {
         makeAutoObservable(this)
-        this.searchMovies()
+        if (!this.searchResult.Search.length) {
+            this.searchMovies()
+        }
     }
 
     async fetchMovies() {

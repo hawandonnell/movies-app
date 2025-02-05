@@ -1,10 +1,13 @@
+import { useContext } from 'react'
 import Grid from '@mui/material/Grid2'
 import { useNavigate } from 'react-router'
 import { Typography, Container } from "@mui/material"
-import { FeaturedMoviesStore, MovieShorten, MoviesStore } from "../atomics/store"
+import { MovieShorten } from "../atomics/store"
 import MovieCard from '../components/MovieCard'
+import { RootStoreContext } from '../hooks/RootStoreContext'
 
-export default function Featured({ store, moviesStore }: { store: FeaturedMoviesStore, moviesStore: MoviesStore }) {
+export default function Featured() {
+    const { moviesStore, featuredStore: store } = useContext(RootStoreContext)
     const navigate = useNavigate()
     const toggleFeatured = (movie: MovieShorten) => {
       const movieIndex = store.movies.findIndex((m) => m.imdbID === movie.imdbID)
