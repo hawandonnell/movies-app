@@ -33,3 +33,7 @@ export interface MoviesStore {
 }
 
 export type CurrentMovieStore = Omit<MoviesStore, 'searcjMovies' | 'search' | 'searchResult' | 'searchMovies' | 'getMovieById'>
+
+export interface FeaturedMoviesStore {
+    movies: Array<MovieShorten>
+}

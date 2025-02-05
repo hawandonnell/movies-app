@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
+import { FeaturedMoviesStore } from "../atomics/store";
 
-class Featured {
+class Featured implements FeaturedMoviesStore {
     movies = []
     constructor() {
         makeAutoObservable(this)

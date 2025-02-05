@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, CardActionArea } from '@mui/material'
 import { MovieShorten } from '../atomics/store'
 
-export default function MovieCard({ movie, onMovieSelect }: { movie: MovieShorten, onMovieSelect: (movie: MovieShorten) => void }) {
+export default function MovieCard({ movie, onMovieSelect, toggleFeatured }: { movie: MovieShorten, onMovieSelect: (movie: MovieShorten) => void, toggleFeatured: (movie: MovieShorten) => void | undefined }) {
     return (
         <Card sx={{ width: 345 }}>
             <CardActionArea onClick={() => onMovieSelect(movie)}>
@@ -13,7 +13,7 @@ export default function MovieCard({ movie, onMovieSelect }: { movie: MovieShorte
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button>Добавить в избранное</Button>
+                <Button onClick={toggleFeatured}>Добавить в избранное</Button>
             </CardActions>
         </Card>
     )
