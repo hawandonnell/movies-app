@@ -18,7 +18,7 @@ class Movies implements MoviesStore {
         Search: [],
     }
     state: 'pending' | 'error' | 'fulfilled' = 'pending'
-    search = 'From Dusk'
+    search = 'Matrix'
 
     constructor() {
         makeAutoObservable(this)

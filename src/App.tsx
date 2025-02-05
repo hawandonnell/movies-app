@@ -14,11 +14,7 @@ const App = observer(() => {
 
   const onMovieSelect = (movie: MovieShorten) => {
     store.getMovieById(movie.imdbID)
-    navigate('/movie')
-  }
-
-  const toggleFeatured = (movie: MovieShorten) => {
-    featuredStore.movies.push(movie)
+    navigate(`/movie/${movie.imdbID}`)
   }
 
   return (
@@ -30,7 +26,7 @@ const App = observer(() => {
         <Grid container spacing={2}>
           {store.searchResult.Search.map(movie => (
             <Grid key={movie.imdbID}>
-              <MovieCard movie={movie} onMovieSelect={onMovieSelect} toggleFeatured={toggleFeatured} />
+              <MovieCard movie={movie} onMovieSelect={onMovieSelect} toggleFeatured={() => featuredStore.toggleFeatured(movie)} />
             </Grid>
           ))}
         </Grid>

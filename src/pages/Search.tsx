@@ -19,35 +19,25 @@ const Search = observer(() => {
 
   const onMovieSelect = (movie: MovieShorten) => {
     store.getMovieById(movie.imdbID)
-    navigate('/movie')
-  }
-
-  const toggleFeatured = (movie: MovieShorten) => {
-    const movieIndex = featuredStore.movies.findIndex((m) => m.imdbID === movie.imdbID)
-    if (movieIndex !== -1) {
-      featuredStore.movies.splice(movieIndex, 1)
-    } else {
-      featuredStore.movies.push(movie)
-    }
+    navigate(`/movie/${movie.imdbID}`)
   }
 
   useEffect(() => {
-    console.log('useEffect')
     if (store.search) debouncedSearch()
     return () => debouncedSearch.cancel()
-  }, [debouncedSearch, store.search, store.searchResult.Search.length])
+  }, [debouncedSearch, store.search])
 
   return (
     <Container maxWidth="xl">
       <Typography variant="h3">Поиск</Typography>
-      <TextField id="movie-search" label="Введите название фильма" variant="outlined" sx={{ width: '100%', margin: '1rem 0' }} value={store.search} onChange={(e) => store.search = e.target.value} />
+      <TextField id="movie-search" label="Введите название фильма" variant="outlined" sx={{ width: '90%', margin: '1rem 0' }} value={store.search} onChange={(e) => store.search = e.target.value} />
       {store.state === 'pending' && <div>Loading...</div>}
       {store.state === 'error' && <div>Error</div>}
       {store.state === 'fulfilled' && store.searchResult.Response === SearchResponse.True && store.searchResult.Search.length && (
         <Grid container spacing={2}>
           {store.searchResult.Search.map(movie => (
             <Grid key={movie.imdbID}>
-              <MovieCard movie={movie} onMovieSelect={onMovieSelect} toggleFeatured={toggleFeatured} />
+              <MovieCard movie={movie} onMovieSelect={onMovieSelect} toggleFeatured={() => featuredStore.toggleFeatured(movie)} />
             </Grid>
           ))}
         </Grid>

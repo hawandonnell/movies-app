@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')!).render(
           <Route index path="/" element={<App />} />
           <Route path="/featured" element={<Featured />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/movie" element={<Movie />} />
+          <Route path="/movie/:imdbID" element={<Movie />} />
         </Routes>
       </BrowserRouter>
     </RootStoreProvider>
