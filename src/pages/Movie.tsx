@@ -32,6 +32,9 @@ const Movie = observer(() => {
                             <Grid><Typography sx={{ fontWeight: 'bold' }} color={store.movies.Rated === 'R' ? 'error' : ''}>{store.movies.Rated}</Typography></Grid>
                         </Grid>
                         <Typography variant="h6">{store.movies.Plot}</Typography>
+                        <iframe id="player" type="text/html" width="640" height="390"
+                            src={`http://www.youtube.com/embed/${store.videoID}?enablejsapi=1&origin=${window.location}`}
+                            frameborder="0"></iframe>
                     </Grid>
                 </Grid>
             )}
